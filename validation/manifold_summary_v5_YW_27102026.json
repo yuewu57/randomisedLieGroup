@@ -1,0 +1,85 @@
+{
+  "version": "v5_YW_27102026",
+  "seed": 27102026,
+  "paths": 256,
+  "steps": 64,
+  "alpha": 0.5,
+  "gamma": 5.0,
+  "kappa": 4.0,
+  "illustrated_path_index": 0,
+  "v4_recording_residual": 0.0,
+  "Rodrigues_expm_residual": 4.596460756922437e-16,
+  "max_SO3_orthogonality_defect": 4.7974206673523844e-15,
+  "max_SO3_determinant_defect": 3.219646771412954e-15,
+  "sphere_statistics": {
+    "RLCF2": {
+      "endpoint_ambient_rms": 0.020442038113073126,
+      "grid_ambient_rms": 0.022537709607023042,
+      "max_radial_defect": 1.1102230246251565e-15,
+      "grid_geodesic_rms": 0.022538781813564876
+    },
+    "RRKMK2": {
+      "endpoint_ambient_rms": 0.020515177561206712,
+      "grid_ambient_rms": 0.022631823473824378,
+      "max_radial_defect": 1.1102230246251565e-15,
+      "grid_geodesic_rms": 0.022632914723300434
+    },
+    "paired_RLCF2": {
+      "endpoint_ambient_rms": 0.008835408267232473,
+      "grid_ambient_rms": 0.009966392740055504,
+      "max_radial_defect": 9.992007221626409e-16,
+      "grid_geodesic_rms": 0.009966488426110776
+    },
+    "paired_RRKMK2": {
+      "endpoint_ambient_rms": 0.008871763024299649,
+      "grid_ambient_rms": 0.010053239916771631,
+      "max_radial_defect": 9.992007221626409e-16,
+      "grid_geodesic_rms": 0.010053337793237355
+    },
+    "CF_midpoint": {
+      "endpoint_ambient_rms": 0.02221734358605008,
+      "grid_ambient_rms": 0.02221734358605008,
+      "max_radial_defect": 4.440892098500626e-16,
+      "grid_geodesic_rms": 0.02221780055771326
+    },
+    "ambient_random_RK2": {
+      "endpoint_ambient_rms": 0.026033609380023262,
+      "grid_ambient_rms": 0.028264401537186862,
+      "max_radial_defect": 0.018707628101071627
+    }
+  },
+  "paired_exponential_backends": [
+    {
+      "N": 32,
+      "Rodrigues_grid_rms": 0.0026646537045390767,
+      "Cayley_grid_rms": 0.0026435909446122295,
+      "coupled_grid_rms": 5.3625329695885104e-05
+    },
+    {
+      "N": 64,
+      "Rodrigues_grid_rms": 0.0012902110839249131,
+      "Cayley_grid_rms": 0.0012862555649654495,
+      "coupled_grid_rms": 1.3432888348489765e-05
+    },
+    {
+      "N": 128,
+      "Rodrigues_grid_rms": 0.0006605679289586588,
+      "Cayley_grid_rms": 0.0006600423084419783,
+      "coupled_grid_rms": 3.359873829967237e-06
+    },
+    {
+      "N": 256,
+      "Rodrigues_grid_rms": 0.00032295365096849266,
+      "Cayley_grid_rms": 0.00032286468983044593,
+      "coupled_grid_rms": 8.405808966261139e-07
+    }
+  ],
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "core_sha256": "6446747a804235364c0bfdb229c49e4ca7924cf3265e55f89f29087f8a41e180",
+  "tests": "Five unittest tests passed; see experiments/test_manifold_diagnostics_v5_YW_27102026.py",
+  "v4_plot_repair": "All four original figures regenerated successfully from archived v4 statistics."
+}

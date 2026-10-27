@@ -59,7 +59,7 @@ def main() -> None:
     ax.loglog(n,constants['B_Frobenius']*h**2,linestyle='--',label=r'$\|\mathcal{B}_1\|_F h^2$')
     ax.loglog(n,np.sqrt(constants['V'])*h**2.5,linestyle=':',label=r'$\sqrt{\mathcal{V}_1}\,h^{5/2}$')
     ax.set_xlabel('Number of time steps N');ax.set_ylabel('Frobenius error')
-    ax.set_title(r'Paired RLCF2 on smooth $SO(3)$: bias and fluctuation');ax.grid(True,alpha=.25);ax.gend()
+    ax.set_title(r'Paired RLCF2 on smooth $SO(3)$: bias and fluctuation');ax.grid(True,alpha=.25);ax.legend(fontsize=9)
     save(fig,'smooth_matrix_bias_fluctuation')
     print(f'Four PDF/PNG figures written to {args.out}')
 

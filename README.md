@@ -1,24 +1,12 @@
 # Randomised Lie-group integrators
 
-Reproducible numerical experiments for the working manuscript on randomised structure-preserving Lie-group integrators for ODEs with low temporal regularity.
+Reproducible numerical experiments for randomised manifold-preserving integration of deterministic ODEs with low temporal regularity. This repository is now named **randomisedLieGroup** (formerly randomisedLie).
 
-The code implements and compares:
-
-- randomised Lie–Euler (RLE);
-- two-stage randomised Runge–Kutta–Munthe-Kaas (RRKMK2);
-- two-stage randomised Lie commutator-free (RLCF2);
-- paired/antithetic RRKMK2 and RLCF2;
-- deterministic Lie–Euler, commutator-free midpoint, RKMK midpoint, and fourth-order RKMK controls.
-
-The main experiments cover rough and smooth problems on `SO(3)` and `S^2`. The manufactured rough problems have explicit reference trajectories, so the low-regularity experiments do not rely on a time-stepping reference solver.
+Implemented methods include randomised Lie-Euler (RLE), two-stage randomised Runge-Kutta-Munthe-Kaas (RRKMK2), two-stage randomised Lie commutator-free (RLCF2), their reflected/paired-node variants, and deterministic Lie-Euler, midpoint and fourth-order RKMK controls. The ODE is deterministic; only the numerical sampling times are random. The suffix 2 labels the two-stage single-node construction, not an unconditional strong order of two.
 
 ## Environment
 
-The v4 campaign was tested with Python 3.13.5 and the pinned dependencies in:
-
-`requirements_v4_YW_01102026.txt`
-
-Create an environment with:
+Tested with Python 3.13.5 and the existing pinned dependencies:
 
 ```bash
 python3.13 -m venv .venv
@@ -26,9 +14,39 @@ source .venv/bin/activate
 python -m pip install -r requirements_v4_YW_01102026.txt
 ```
 
-## Full experiment campaign
+Windows users can use the equivalent virtual-environment activation command and omit or set the shell environment variables below as appropriate.
+
+## New: manifold plots and exponential-action diagnostics (v5)
 
 From the repository root:
+
+```bash
+python experiments/test_manifold_diagnostics_v5_YW_27102026.py
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+python experiments/manifold_diagnostics_v5_YW_27102026.py \
+  --paths 256 --steps 64 --seed 27102026 --out results/manifold_v5
+
+python experiments/plot_manifolds_v5_YW_27102026.py \
+  --results results/manifold_v5 --out figures
+```
+
+This writes compressed trajectory arrays, a JSON numerical summary, and six separate PDF/PNG figures:
+
+1. Actual trajectories on S^2, with an unprojected Euclidean randomised RK2 control.
+2. Sphere-constraint drift over time for all methods.
+3. All randomised endpoints in a tangent chart at the fixed exact endpoint.
+4. SO(3) through the trajectories of all three rotation-frame axes.
+5. Exponential approximation alone on a constant-rotation equation.
+6. Common-node paired RLCF2 with Rodrigues versus Cayley at every action.
+
+The illustration always uses path zero, not the best-looking realisation. Numerical states are never projected or renormalised. SO(3) is not identified with S^2, and no intrinsic error is assigned to the off-manifold Euclidean control. The JSON records the seed, parameters, environment, original-core SHA256, and diagnostic residuals. The independent small regression suite contains five tests.
+
+These are additional diagnostics, **not** a rerun of the complete v4 campaign below. They do not establish universal or equal-cost superiority. The checked-in small validation summary records the v5 run; large arrays and generated figures remain untracked.
+
+For the mathematical conventions, sufficient exponential-error budget, scope of the Cayley replacement, and primary references, see [norms and exponentials](docs/norms_and_exponentials_v5_YW_27102026.md).
+
+## Full v4 paper campaign (unchanged numerical core)
 
 ```bash
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
@@ -41,29 +59,21 @@ python experiments/plot_results_v4_YW_01102026.py \
   --results results --out figures
 ```
 
-Windows users may omit the two environment-variable assignments or set them in their shell.
+The v4 plotting script has been repaired: the last plot now calls `ax.legend(...)`, not the invalid `ax.gend()`. Its four plots were regenerated from the archived v4 statistics to test this repair. No v4 integrator formula or archived numerical table was changed.
 
-A smaller smoke test is:
+A smaller numerical smoke test is:
 
 ```bash
 python experiments/randomised_lie_verification_v4_YW_01102026.py \
   --mode main --paths 64 --maxN 128 --out smoke_results
 ```
 
-Do not mix smoke-test output with the paper campaign.
+The four-panel-set plotting command requires the complete `--mode all` result summary, not smoke-test output. Do not mix smoke and paper results.
 
-## Reproducibility notes
+## References and numerical scope
 
-- Randomness is introduced by the numerical integrator, not by the ODE.
-- Fixed seeds are stored by the experiment driver.
-- No projection or renormalisation is applied after each Lie-group step.
-- The rough reference trajectory is explicit.
-- The smooth reference problem uses a refined DOP853 solve as a numerical diagnostic.
-- Common-node coupled distances between RLCF2 and RRKMK2 are recorded directly.
-- Generated `results/`, `smoke_results/`, and `figures/` are intentionally not version-controlled.
+The rough SO(3) and state-dependent S^2 problems use fixed infinite-series coefficients with explicit reference trajectories, not time-stepping reference solvers or a mesh-dependent finite cutoff. The smooth controls use refined DOP853 references as numerical diagnostics. Original code and mathematical limitations are documented in the accompanying manuscript.
 
-## Version
+Closed-form Rodrigues/quaternion formulas preserve the manifold in exact arithmetic; measured floating-point defects are reported rather than called exact machine preservation. Cayley is used only where it is group-valued and to sufficient local order. Retaining a convergence order does not retain every refined asymptotic bias constant.
 
-Current reproducibility code: **v4_YW_01102026**.
-
-This repository is research code accompanying an evolving manuscript. Mathematical claims should be checked against the current manuscript rather than inferred solely from numerical output.
+Generated `results/`, `smoke_results/`, and `figures/` are ignored. The private working manuscript and provisional author discussion are not published in this code repository.
